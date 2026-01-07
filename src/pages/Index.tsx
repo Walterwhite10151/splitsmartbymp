@@ -5,7 +5,14 @@ import { CreateGroupModal } from '@/components/CreateGroupModal';
 import { GroupCard } from '@/components/GroupCard';
 import { GroupPage } from '@/pages/GroupPage';
 import { EmptyState } from '@/components/EmptyState';
-import { Plus, Wallet, Users, Sparkles } from 'lucide-react';
+import { Plus, Wallet, Users, Sparkles, UserPlus } from 'lucide-react';
+
+const Logo = () => (
+  <h1 className="font-display font-bold text-3xl md:text-4xl tracking-tight">
+    <span className="text-owes">Smart</span>
+    <span className="text-owed">Split</span>
+  </h1>
+);
 
 const Index = () => {
   const {
@@ -43,23 +50,30 @@ const Index = () => {
   // Landing page
   return (
     <div className="min-h-screen bg-background">
+      {/* Top Navigation with Logo */}
+      <nav className="sticky top-0 z-20 bg-background/80 backdrop-blur-lg border-b">
+        <div className="container max-w-4xl py-4 flex items-center justify-center">
+          <Logo />
+        </div>
+      </nav>
+
       {/* Hero Section */}
       <header className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-accent/20 to-background" />
-        <div className="absolute top-20 right-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl animate-float" />
-        <div className="absolute bottom-10 left-10 w-48 h-48 bg-accent/30 rounded-full blur-2xl animate-float" style={{ animationDelay: '2s' }} />
+        <div className="absolute inset-0 bg-gradient-to-br from-owes/5 via-owed/5 to-background" />
+        <div className="absolute top-20 right-10 w-72 h-72 bg-owed/10 rounded-full blur-3xl animate-float" />
+        <div className="absolute bottom-10 left-10 w-48 h-48 bg-owes/10 rounded-full blur-2xl animate-float" style={{ animationDelay: '2s' }} />
         
-        <div className="container max-w-4xl relative py-16 md:py-24">
+        <div className="container max-w-4xl relative py-12 md:py-20">
           <div className="text-center space-y-6">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-owed/10 text-owed text-sm font-medium">
               <Sparkles className="h-4 w-4" />
               Simple & Smart Expense Splitting
             </div>
             
-            <h1 className="font-display font-bold text-4xl md:text-5xl lg:text-6xl tracking-tight">
+            <h2 className="font-display font-bold text-3xl md:text-4xl lg:text-5xl tracking-tight">
               Split Expenses
-              <span className="block text-primary">Without the Drama</span>
-            </h1>
+              <span className="block text-owed">Without the Drama</span>
+            </h2>
             
             <p className="text-lg text-muted-foreground max-w-xl mx-auto">
               Track shared expenses with friends, roommates, or travel buddies. 
@@ -73,13 +87,17 @@ const Index = () => {
               </Button>
             </div>
             
-            <div className="flex items-center justify-center gap-8 pt-8 text-sm text-muted-foreground">
+            <div className="flex items-center justify-center gap-8 pt-6 text-sm text-muted-foreground">
               <div className="flex items-center gap-2">
-                <Wallet className="h-5 w-5 text-primary" />
+                <Wallet className="h-5 w-5 text-owed" />
                 <span>No Sign-up</span>
               </div>
               <div className="flex items-center gap-2">
-                <Users className="h-5 w-5 text-primary" />
+                <UserPlus className="h-5 w-5 text-owed" />
+                <span>Add Members Easily</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Users className="h-5 w-5 text-owed" />
                 <span>Free Forever</span>
               </div>
             </div>
@@ -93,7 +111,7 @@ const Index = () => {
           <EmptyState
             icon={<Users className="h-12 w-12 text-muted-foreground" />}
             title="No Groups Yet"
-            description="Create your first group to start tracking shared expenses with friends, family, or roommates."
+            description="Create your first group to start tracking shared expenses with friends, family, or roommates. You can add members after creating a group."
             action={
               <Button onClick={() => setShowCreateGroup(true)} className="gap-2">
                 <Plus className="h-4 w-4" />
