@@ -45,12 +45,19 @@ export const GroupPage = ({
             <Button variant="ghost" size="icon" onClick={onBack} className="shrink-0">
               <ArrowLeft className="h-5 w-5" />
             </Button>
-            <div className="flex-1 min-w-0">
-              <h1 className="font-display font-bold text-xl truncate">{group.name}</h1>
-              <p className="text-sm text-muted-foreground">
-                {group.members.length} members · {group.currency}
-              </p>
+            <div className="flex-1 min-w-0 text-center">
+              <h1 className="font-display font-bold text-2xl">
+                <span className="text-owes">Smart</span>
+                <span className="text-owed">Split</span>
+              </h1>
             </div>
+            <div className="w-10" /> {/* Spacer for centering */}
+          </div>
+          <div className="mt-3 text-center">
+            <p className="font-display font-semibold text-lg">{group.name}</p>
+            <p className="text-sm text-muted-foreground">
+              {group.members.length} members · {group.currency}
+            </p>
           </div>
         </div>
       </header>
