@@ -12,7 +12,8 @@ interface ExpenseCardProps {
 export const ExpenseCard = ({ expense, members, currency, onDelete }: ExpenseCardProps) => {
   const currencySymbol = getCurrencySymbol(currency);
   const payer = members.find(m => m.id === expense.paidBy);
-  const splitMembers = expense.splitBetween.map(id => members.find(m => m.id === id)?.name).filter(Boolean);
+  const validSplitMembers = expense.splitBetween.filter(id => members.some(m => m.id === id));
+  const splitMemberNames = validSplitMembers.map(id => members.find(m => m.id === id)?.name).filter(Boolean);
   
   const getSplitAmount = (memberId: string) => {
     if (expense.splitType === 'equal') {
@@ -20,6 +21,9 @@ export const ExpenseCard = ({ expense, members, currency, onDelete }: ExpenseCar
     }
     return expense.splitAmounts?.[memberId] || 0;
   };
+
+  // Skip rendering if payer is missing
+  if (!payer) return null;
 
   return (
     <div className="p-4 rounded-xl border bg-card shadow-card hover:shadow-soft transition-all duration-200 animate-fade-in">
@@ -48,11 +52,11 @@ export const ExpenseCard = ({ expense, members, currency, onDelete }: ExpenseCar
           <Users className="h-4 w-4" />
           <span>
             Split {expense.splitType === 'equal' ? 'equally' : 'custom'} between{' '}
-            {splitMembers.length} {splitMembers.length === 1 ? 'person' : 'people'}
+            {splitMemberNames.length} {splitMemberNames.length === 1 ? 'person' : 'people'}
           </span>
         </div>
         <div className="mt-2 flex flex-wrap gap-2">
-          {expense.splitBetween.map(memberId => {
+          {validSplitMembers.map(memberId => {
             const member = members.find(m => m.id === memberId);
             const amount = getSplitAmount(memberId);
             return (
