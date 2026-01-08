@@ -1,6 +1,5 @@
 import { Balance, Member, getCurrencySymbol } from '@/types/expense';
-import { ArrowRight, CheckCircle2 } from 'lucide-react';
-
+import { CheckCircle2 } from 'lucide-react';
 interface BalanceSummaryProps {
   balances: Balance[];
   members: Member[];
@@ -26,39 +25,31 @@ export const BalanceSummary = ({ balances, members, currency }: BalanceSummaryPr
   }
 
   return (
-    <div className="space-y-3">
-      <h3 className="font-display font-semibold text-lg">Who Owes Whom</h3>
-      <div className="space-y-2">
+    <div className="space-y-4">
+      <h3 className="font-display font-semibold text-lg">Settlements</h3>
+      <div className="space-y-3">
         {balances.map((balance, index) => (
           <div
             key={`${balance.from}-${balance.to}-${index}`}
             className="p-4 rounded-xl border bg-card shadow-card animate-fade-in"
-            style={{ animationDelay: `${index * 50}ms` }}
+            style={{ animationDelay: `${index * 100}ms` }}
           >
-            <div className="flex items-center justify-between gap-4">
-              <div className="flex items-center gap-3 flex-1 min-w-0">
-                <div className="flex items-center gap-2 flex-1 min-w-0">
-                  <span className="font-medium text-owes truncate">
-                    {getMemberName(balance.from)}
-                  </span>
-                  <ArrowRight className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-                  <span className="font-medium text-owed truncate">
-                    {getMemberName(balance.to)}
-                  </span>
-                </div>
-              </div>
-              <div className="flex-shrink-0">
-                <span className="inline-flex items-center px-3 py-1.5 rounded-lg bg-gradient-to-r from-owes/10 to-owed/10 font-display font-bold text-lg">
-                  <span className="text-owes">{currencySymbol}</span>
-                  <span className="text-foreground">{balance.amount.toFixed(2)}</span>
-                </span>
-              </div>
-            </div>
-            <p className="text-xs text-muted-foreground mt-2">
-              {getMemberName(balance.from)} owes {getMemberName(balance.to)}
+            <p className="text-base">
+              <span className="font-semibold text-owes">{getMemberName(balance.from)}</span>
+              <span className="text-muted-foreground"> owes </span>
+              <span className="font-semibold text-owed">{getMemberName(balance.to)}</span>
+              <span className="text-muted-foreground"> → </span>
+              <span className="font-bold text-primary text-lg">
+                {currencySymbol}{balance.amount.toFixed(2)}
+              </span>
             </p>
           </div>
         ))}
+      </div>
+      <div className="pt-2 border-t border-border">
+        <p className="text-sm text-muted-foreground">
+          Total settlements: <span className="font-semibold text-foreground">{balances.length}</span>
+        </p>
       </div>
     </div>
   );
