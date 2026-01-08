@@ -9,8 +9,8 @@ import { Plus, Wallet, Users, Sparkles, UserPlus } from 'lucide-react';
 
 const Logo = () => (
   <h1 className="font-display font-bold text-3xl md:text-4xl tracking-tight">
-    <span className="text-owes">Smart</span>
-    <span className="text-owed">Split</span>
+    <span className="text-owes animate-pulse inline-block hover:scale-110 transition-transform duration-300">Smart</span>
+    <span className="text-owed animate-pulse inline-block hover:scale-110 transition-transform duration-300" style={{ animationDelay: '0.5s' }}>Split</span>
   </h1>
 );
 
