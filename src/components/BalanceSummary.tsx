@@ -8,9 +8,17 @@ interface BalanceSummaryProps {
 
 export const BalanceSummary = ({ balances, members, currency }: BalanceSummaryProps) => {
   const currencySymbol = getCurrencySymbol(currency);
-  const getMemberName = (id: string) => members.find(m => m.id === id)?.name || 'Unknown';
+  const getMemberName = (id: string) => {
+    const member = members.find(m => m.id === id);
+    return member?.name || null;
+  };
 
-  if (balances.length === 0) {
+  // Filter out balances with missing members
+  const validBalances = balances.filter(balance => 
+    getMemberName(balance.from) && getMemberName(balance.to)
+  );
+
+  if (validBalances.length === 0) {
     return (
       <div className="p-6 rounded-xl border bg-card text-center">
         <div className="inline-flex p-3 rounded-full bg-success/10 mb-3">
@@ -28,7 +36,7 @@ export const BalanceSummary = ({ balances, members, currency }: BalanceSummaryPr
     <div className="space-y-4">
       <h3 className="font-display font-semibold text-lg">Settlements</h3>
       <div className="space-y-3">
-        {balances.map((balance, index) => (
+        {validBalances.map((balance, index) => (
           <div
             key={`${balance.from}-${balance.to}-${index}`}
             className="p-4 rounded-xl border bg-card shadow-card animate-fade-in"
@@ -48,7 +56,7 @@ export const BalanceSummary = ({ balances, members, currency }: BalanceSummaryPr
       </div>
       <div className="pt-2 border-t border-border">
         <p className="text-sm text-muted-foreground">
-          Total settlements: <span className="font-semibold text-foreground">{balances.length}</span>
+          Total settlements: <span className="font-semibold text-foreground">{validBalances.length}</span>
         </p>
       </div>
     </div>
