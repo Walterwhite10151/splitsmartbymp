@@ -49,7 +49,6 @@ export const GroupPage = ({
               <h1 className="font-display font-bold text-2xl">
                 <span className="text-owes animate-pulse inline-block hover:scale-110 transition-transform duration-300">Smart</span>
                 <span className="text-owed animate-pulse inline-block hover:scale-110 transition-transform duration-300" style={{ animationDelay: '0.5s' }}>Split</span>
-                <span className="text-owed">Split</span>
               </h1>
             </div>
             <div className="w-10" /> {/* Spacer for centering */}
